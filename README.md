@@ -33,6 +33,9 @@ Cold start — users with no ratings yet see trending/popular movies instead.
 
 Project structure
 
+## Project structure
+
+\```
 movie_recommender/
 ├── manage.py
 ├── requirements.txt
@@ -50,7 +53,7 @@ movie_recommender/
 │       ├── load_movies.py       # imports the TMDB CSV into the database
 │       └── fetch_posters.py     # fetches poster_path from the TMDB API
 ├── recommendations/
-│   └── engine.py                 # ContentBasedEngine, RecommendationEngine
+│   └── engine.py                # ContentBasedEngine, RecommendationEngine
 ├── templates/
 │   ├── base.html
 │   └── movies/
@@ -58,8 +61,8 @@ movie_recommender/
 │       ├── list.html
 │       ├── detail.html
 │       └── watchlist.html
-└── ml_models/                    # cached .pkl files (auto-generated, not committed)
-
+└── ml_models/                   # cached .pkl files (auto-generated, not committed)
+\```
 Setup
 
 1. Clone and create a virtual environment
