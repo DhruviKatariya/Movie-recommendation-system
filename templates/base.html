@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CineMatch{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0f1115; color: #e8e8e8; }
+        .navbar { background-color: #161922 !important; }
+        .card { background-color: #1a1d27; border: none; }
+        .movie-card img { height: 330px; object-fit: cover; width: 100%; border-radius: 6px 6px 0 0; }
+        .movie-card { transition: transform 0.15s; cursor: pointer; }
+        .movie-card:hover { transform: translateY(-4px); }
+        .badge-genre { background-color: #2a2e3a; color: #cfcfcf; margin-right: 4px; }
+        .section-title { border-left: 4px solid #e50914; padding-left: 10px; margin: 30px 0 16px; }
+        a { text-decoration: none; }
+        .star-rating { font-size: 1.4rem; color: #ffc107; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'home' %}">CineMatch</a>
+            <div class="d-flex">
+                <form class="d-flex me-3" method="get" action="{% url 'movie_list' %}">
+                    <input class="form-control form-control-sm" type="search" name="q" placeholder="Search movies...">
+                </form>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'watchlist' %}" class="btn btn-sm btn-outline-light me-2">My Ratings</a>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-sm btn-outline-light">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}CineMatch - Home{% endblock %}
+
+{% block content %}
+
+{% if recommendations %}
+<h3 class="section-title">Recommended for you</h3>
+<div class="row g-3">
+    {% for movie in recommendations %}
+    <div class="col-6 col-md-3 col-lg-2">
+        <a href="{% url 'movie_detail' movie.pk %}" class="movie-card card">
+            <img src="{{ movie.poster_url }}" alt="{{ movie.title }}">
+            <div class="card-body p-2">
+                <p class="mb-0 small fw-semibold">{{ movie.title }}</p>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<h3 class="section-title">Trending now</h3>
+<div class="row g-3">
+    {% for movie in trending %}
+    <div class="col-6 col-md-3 col-lg-2">
+        <a href="{% url 'movie_detail' movie.pk %}" class="movie-card card">
+            <img src="{{ movie.poster_url }}" alt="{{ movie.title }}">
+            <div class="card-body p-2">
+                <p class="mb-0 small fw-semibold">{{ movie.title }}</p>
+                <p class="mb-0 small text-muted">{{ movie.vote_average }} / 10</p>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<h3 class="section-title">Top rated</h3>
+<div class="row g-3">
+    {% for movie in top_rated %}
+    <div class="col-6 col-md-3 col-lg-2">
+        <a href="{% url 'movie_detail' movie.pk %}" class="movie-card card">
+            <img src="{{ movie.poster_url }}" alt="{{ movie.title }}">
+            <div class="card-body p-2">
+                <p class="mb-0 small fw-semibold">{{ movie.title }}</p>
+                <p class="mb-0 small text-muted">{{ movie.vote_average }} / 10</p>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="mb-5"></div>
+{% endblock %}   

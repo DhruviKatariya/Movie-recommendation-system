@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Browse Movies{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h3 class="mb-0">Browse movies {% if query %}- results for "{{ query }}"{% endif %}</h3>
+    <div class="d-flex gap-2">
+        <select class="form-select form-select-sm" onchange="window.location.href=this.value">
+            <option value="?sort=-popularity{% if query %}&q={{ query }}{% endif %}" {% if current_sort == '-popularity' %}selected{% endif %}>Popularity</option>
+            <option value="?sort=-vote_average{% if query %}&q={{ query }}{% endif %}" {% if current_sort == '-vote_average' %}selected{% endif %}>Top rated</option>
+            <option value="?sort=-release_date{% if query %}&q={{ query }}{% endif %}" {% if current_sort == '-release_date' %}selected{% endif %}>Newest</option>
+            <option value="?sort=title{% if query %}&q={{ query }}{% endif %}" {% if current_sort == 'title' %}selected{% endif %}>A-Z</option>
+        </select>
+    </div>
+</div>
+
+<div class="mb-3">
+    <a href="{% url 'movie_list' %}" class="badge bg-secondary text-decoration-none">All</a>
+    {% for genre in genres %}
+        <a href="?genre={{ genre.slug }}" class="badge {% if current_genre == genre.slug %}bg-danger{% else %}bg-secondary{% endif %} text-decoration-none">{{ genre.name }}</a>
+    {% endfor %}
+</div>
+
+<div class="row g-3">
+    {% for movie in movies %}
+    <div class="col-6 col-md-3 col-lg-2">
+        <a href="{% url 'movie_detail' movie.pk %}" class="movie-card card">
+            <img src="{{ movie.poster_url }}" alt="{{ movie.title }}">
+            <div class="card-body p-2">
+                <p class="mb-0 small fw-semibold">{{ movie.title }}</p>
+                <p class="mb-0 small text-muted">{{ movie.year|default:"-" }} - {{ movie.vote_average }}/10</p>
+            </div>
+        </a>
+    </div>
+    {% empty %}
+    <p class="text-muted">No movies found.</p>
+    {% endfor %}
+</div>
+
+<div class="mb-5"></div>
+{% endblock %}

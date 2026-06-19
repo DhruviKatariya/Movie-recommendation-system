@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}My Ratings{% endblock %}
+
+{% block content %}
+<h3 class="section-title">My ratings</h3>
+<div class="row g-3">
+    {% for r in user_ratings %}
+    <div class="col-6 col-md-3 col-lg-2">
+        <a href="{% url 'movie_detail' r.movie.pk %}" class="movie-card card">
+            <img src="{{ r.movie.poster_url }}" alt="{{ r.movie.title }}">
+            <div class="card-body p-2">
+                <p class="mb-0 small fw-semibold">{{ r.movie.title }}</p>
+                <p class="mb-0 small text-muted">Your rating: {{ r.score }}/5</p>
+            </div>
+        </a>
+    </div>
+    {% empty %}
+    <p class="text-muted">You haven't rated any movies yet. <a href="{% url 'movie_list' %}">Browse movies</a> to get started.</p>
+    {% endfor %}
+</div>
+{% endblock %}
